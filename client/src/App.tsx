@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
-
+import { Dashboard } from "./pages/dashboard/dashboard";
 const App: FC = (): ReactElement => {
-  return <h1>Hello World</h1>;
+  return <Dashboard />;
 };
 
 export default App;
