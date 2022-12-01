@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, useState, useEffect } from "react";
-import { Stack, Box } from "@mui/material";
+import { Stack, Box, Button, Typography } from "@mui/material";
 import { OneWayTrigger } from "./oneWayTrigger/OneWayTrigger";
 import { ReturnTrigger } from "./returnTrigger/ReturnTrigger";
 
@@ -21,6 +21,10 @@ export const CreteFlightForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
+      <Typography mb={2} component="h2" variant="h6">
+        Norwegian AirLine
+      </Typography>
+
       <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
         <DepartureCity />
         <ArriveCity />
@@ -29,6 +33,14 @@ export const CreteFlightForm: FC = (): ReactElement => {
         <DepartureDate />
         <ArriveDate />
       </Stack>
+      <Button
+        variant="contained"
+        size="medium"
+        fullWidth
+        onClick={(e) => console.log(e)}
+      >
+        Search for a flight
+      </Button>
     </Box>
   );
 };
