@@ -1,7 +1,8 @@
 import React, { FC, ReactElement, useState, useEffect } from "react";
 import { TextField } from "@mui/material";
-
-export const ArriveCity: FC = (): ReactElement => {
+import { IArriveCity } from "./IArriveCity";
+export const ArriveCity: FC<IArriveCity> = (props): ReactElement => {
+  const { onChange } = props;
   return (
     <TextField
       id="To"
@@ -12,7 +13,7 @@ export const ArriveCity: FC = (): ReactElement => {
       name="title"
       fullWidth
       // disabled={disabled}
-      // onChange={onChange}
+      onChange={onChange}
     />
   );
 };
