@@ -23,7 +23,15 @@ export const SearchFlightForm: FC = (): ReactElement => {
   // const createTaskMutation = useMutation((data: ISearchFlight) =>
   //   sendApiRequest("http://localhost:999/tasks", "POST", data)
   // );
-  const searchFlightHandler = () => {};
+  const searchFlightHandler = () => {
+    const flight: ISearchFlight = {
+      departureCity,
+      arriveCity,
+      departureDate: departureDate.toString(),
+      arriveDate: arriveDate.toString(),
+    };
+    console.log(flight);
+  };
 
   // const createTaskMutation = useMutation((data: any) =>
   //   sendApiRequest("http://localhost:999/tasks", "POST", data)
@@ -50,7 +58,10 @@ export const SearchFlightForm: FC = (): ReactElement => {
           onChange={(date) => setDepartureDate(date)}
           value={departureDate}
         />
-        <ArriveDate />
+        <ArriveDate
+          onChange={(date) => setArriveDate(date)}
+          value={arriveDate}
+        />
       </Stack>
       <Button
         variant="contained"

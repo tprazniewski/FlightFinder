@@ -6,7 +6,7 @@ import { TextField } from "@mui/material";
 import { IDate } from "./IDate";
 
 export const DepartureDate: FC<IDate> = (props): ReactElement => {
-  const { onChange, value } = props;
+  const { onChange = (date) => console.log(date), value } = props;
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -3,8 +3,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
-
-export const ArriveDate: FC = (): ReactElement => {
+import { IDate } from "./IDate";
+export const ArriveDate: FC<IDate> = (props): ReactElement => {
+  const { onChange = (date) => console.log(date), value } = props;
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -12,9 +13,8 @@ export const ArriveDate: FC = (): ReactElement => {
           label="Departure Date"
           inputFormat="dd/MM/yyyy"
           // value={value}
-          value={new Date()}
-          onChange={(date) => console.log(date)}
-          // onChange={onChange}
+          value={value}
+          onChange={onChange}
           // disabled={disabled}
           renderInput={(params) => <TextField {...params} />}
         />
