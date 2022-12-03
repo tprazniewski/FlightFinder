@@ -3,4 +3,5 @@ export interface ISearchFlight {
   arriveCity: string;
   departureDate: string;
   arriveDate: string;
+  isOneWay: boolean;
 }
