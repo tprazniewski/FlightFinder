@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useState, useEffect } from "react";
 import { Stack, Box, Button, Typography } from "@mui/material";
 import { OneWayTrigger } from "./oneWayTrigger/OneWayTrigger";
 import { ReturnTrigger } from "./returnTrigger/ReturnTrigger";
+import axios from "axios";
 
 import { DepartureCity } from "./departureCity/DepartureCityField";
 import { ArriveCity } from "./arriveCity/ArriveCityField";
@@ -11,6 +12,7 @@ import { ArriveDate } from "./arriveDate/ArriveDateField";
 
 import { Passengers } from "./passengers/Passengers";
 import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { sendApiRequest } from "../../api/api";
 import { ISearchFlight } from "./ISearchFlight";
 export const SearchFlightForm: FC = (): ReactElement => {
@@ -20,22 +22,27 @@ export const SearchFlightForm: FC = (): ReactElement => {
   const [departureDate, setDepartureDate] = useState<Date>(new Date());
   const [arriveDate, setArriveDate] = useState<Date>(new Date());
 
-  const createTaskMutation = useMutation((data: ISearchFlight) =>
-    sendApiRequest("http://localhost:999/flights", "POST", data)
-  );
-  const searchFlightHandler = () => {
-    const flight: ISearchFlight = {
-      departureCity,
-      arriveCity,
-      departureDate: departureDate.toString(),
-      arriveDate: arriveDate.toString(),
-    };
-    console.log(flight);
+  const fetchFlights = async (f: any) => {
+    console.log(f.queryKey);
+    // f.queryKey[0]
+    const res = await fetch(
+      `http://localhost:3005/${f.queryKey[0]}?departureCity=${f.queryKey[1]}&&arriveCity=${f.queryKey[2]}&&departureDate=${f.queryKey[3]}&&arriveDate=${f.queryKey[4]}`
+    );
+    return await res.json();
   };
 
-  // const createTaskMutation = useMutation((data: any) =>
-  //   sendApiRequest("http://localhost:999/tasks", "POST", data)
-  // );
+  const { data, status, refetch } = useQuery(
+    ["flights", departureCity, arriveCity, departureDate, arriveDate],
+    fetchFlights,
+    {
+      enabled: false,
+    }
+  );
+
+  const searchFlightHandler = () => {
+    refetch();
+  };
+
   return (
     <Box
       display="flex"
@@ -46,7 +53,7 @@ export const SearchFlightForm: FC = (): ReactElement => {
       my={6}
     >
       <Typography mb={2} component="h2" variant="h6">
-        Norwegian AirLine
+        {status}
       </Typography>
 
       <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
