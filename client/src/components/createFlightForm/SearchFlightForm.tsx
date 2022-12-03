@@ -28,7 +28,9 @@ export const SearchFlightForm: FC = (): ReactElement => {
     const res = await fetch(
       `http://localhost:3005/${f.queryKey[0]}?departureCity=${f.queryKey[1]}&&arriveCity=${f.queryKey[2]}&&departureDate=${f.queryKey[3]}&&arriveDate=${f.queryKey[4]}`
     );
-    return await res.json();
+    const rest = await res.json();
+    console.log(rest);
+    return rest;
   };
 
   const { data, status, refetch } = useQuery(
@@ -52,9 +54,11 @@ export const SearchFlightForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
-      <Typography mb={2} component="h2" variant="h6">
-        {status}
-      </Typography>
+      {status === "success" && (
+        <Typography mb={2} component="h2" variant="h6">
+          the status is : {status}
+        </Typography>
+      )}
 
       <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
         <DepartureCity onChange={(e) => setDepartureCity(e.target.value)} />
