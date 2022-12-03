@@ -20,9 +20,9 @@ export const SearchFlightForm: FC = (): ReactElement => {
   const [departureDate, setDepartureDate] = useState<Date>(new Date());
   const [arriveDate, setArriveDate] = useState<Date>(new Date());
 
-  // const createTaskMutation = useMutation((data: ISearchFlight) =>
-  //   sendApiRequest("http://localhost:999/tasks", "POST", data)
-  // );
+  const createTaskMutation = useMutation((data: ISearchFlight) =>
+    sendApiRequest("http://localhost:999/flights", "POST", data)
+  );
   const searchFlightHandler = () => {
     const flight: ISearchFlight = {
       departureCity,
