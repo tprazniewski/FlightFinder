@@ -6,6 +6,8 @@ import {
   Typography,
   Checkbox,
   IconButton,
+  LinearProgress,
+  Grid,
 } from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -36,10 +38,17 @@ export const SearchFlightForm: FC = (): ReactElement => {
   const [infants, setInfants] = useState(0);
 
   const fetchFlights = async (f: any) => {
-    console.log(f.queryKey);
     // f.queryKey[0]
     const res = await fetch(
-      `http://localhost:3005/${f.queryKey[0]}?departureCity=${f.queryKey[1]}&&arriveCity=${f.queryKey[2]}&&departureDate=${f.queryKey[3]}&&arriveDate=${f.queryKey[4]}&&isOneWay=${f.queryKey[5]}`
+      `http://localhost:3005/${f.queryKey[0]}?depatureDestination=${
+        f.queryKey[1]
+      }&&arrivalDestination=${
+        f.queryKey[2]
+      }&&depatureAt=${f.queryKey[3].toISOString()}&&arriveAt=${f.queryKey[4].toISOString()}&&isOneWay=${
+        f.queryKey[5]
+      }&&adult=${f.queryKey[6]}&&child=${f.queryKey[7]}&&infants=${
+        f.queryKey[8]
+      }`
     );
     const rest = await res.json();
     console.log(rest);
@@ -47,13 +56,22 @@ export const SearchFlightForm: FC = (): ReactElement => {
   };
   const isOneWayHandler = () => setIsOneWay(!isOneWay);
   const { data, status, refetch } = useQuery(
-    ["flights", departureCity, arriveCity, departureDate, arriveDate, isOneWay],
+    [
+      "flights",
+      departureCity,
+      arriveCity,
+      departureDate,
+      arriveDate,
+      isOneWay,
+      adults,
+      children,
+      infants,
+    ],
     fetchFlights,
     {
       enabled: false,
     }
   );
-
   const searchFlightHandler = () => refetch();
   const addAdult = () => {
     setAdults(adults + 1);
@@ -163,7 +181,6 @@ export const SearchFlightForm: FC = (): ReactElement => {
           <AddCircleOutlineIcon onClick={addInfant} />
         </IconButton>
       </Stack>
-
       <Button
         variant="contained"
         size="medium"

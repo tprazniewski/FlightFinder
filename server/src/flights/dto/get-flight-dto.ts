@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsDateString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsDateString,
+  IsString,
+  IsBoolean,
+  IsNumber,
+} from 'class-validator';
 
 export class GetFlightDto {
   @IsNotEmpty()
@@ -14,4 +20,13 @@ export class GetFlightDto {
   @IsNotEmpty()
   @IsDateString()
   arriveAt: string;
+
+  @IsString()
+  isOneWay: boolean;
+
+  adult: number;
+
+  child: number;
+
+  infants: number;
 }

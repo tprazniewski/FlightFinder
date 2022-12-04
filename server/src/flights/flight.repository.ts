@@ -9,9 +9,36 @@ export class FlightRepository {
   constructor(
     @InjectModel(Flight.name) private flightModel: Model<FlightDocument>,
   ) {}
-  getFlightsByFilter(getFlightDto: GetFlightDto) {
-    const { depatureDestination, arrivalDestination, depatureAt, arriveAt } =
-      getFlightDto;
-    return this.flightModel.find();
+  async getFlightsByFilter(getFlightDto: GetFlightDto) {
+    const {
+      depatureDestination,
+      arrivalDestination,
+      depatureAt,
+      arriveAt,
+      isOneWay,
+      adult,
+      child,
+      infants,
+    } = getFlightDto;
+    const a = await this.flightModel.aggregate([
+      {
+        $unwind: '$itineraries',
+      },
+      {
+        $match: {
+          depatureDestination,
+          arrivalDestination,
+        },
+      },
+      {
+        $match: {
+          'itineraries.avaliableSeats': {
+            $gte: 50,
+          },
+        },
+      },
+    ]);
+    // console.log(a);
+    return a;
   }
 }

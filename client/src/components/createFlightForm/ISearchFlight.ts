@@ -4,4 +4,7 @@ export interface ISearchFlight {
   departureDate: string;
   arriveDate: string;
   isOneWay: boolean;
+  adults: number;
+  children: number;
+  infants: number;
 }
