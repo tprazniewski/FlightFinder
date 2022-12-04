@@ -20,6 +20,8 @@ export class FlightRepository {
       child,
       infants,
     } = getFlightDto;
+    const sumOfPlaces = Number(adult) + Number(child) + Number(infants);
+
     const a = await this.flightModel.aggregate([
       {
         $unwind: '$itineraries',
@@ -33,7 +35,7 @@ export class FlightRepository {
       {
         $match: {
           'itineraries.avaliableSeats': {
-            $gte: 50,
+            $gte: sumOfPlaces,
           },
         },
       },

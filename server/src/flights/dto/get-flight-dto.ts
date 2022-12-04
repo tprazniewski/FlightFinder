@@ -1,10 +1,13 @@
 import {
   IsNotEmpty,
+  IsInt,
   IsDateString,
   IsString,
   IsBoolean,
   IsNumber,
+  IsNumberString,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class GetFlightDto {
   @IsNotEmpty()
@@ -24,9 +27,15 @@ export class GetFlightDto {
   @IsString()
   isOneWay: boolean;
 
+  @Type(() => Number)
+  @IsInt()
   adult: number;
 
+  @Type(() => Number)
+  @IsInt()
   child: number;
 
+  @Type(() => Number)
+  @IsInt()
   infants: number;
 }
