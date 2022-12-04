@@ -7,8 +7,8 @@ import { Footer } from "./Footer/Footer";
 interface IFlight {
   departureAt: string;
   arriveAt: string;
-  priceForAdults: Number;
-  priceForChild: Number;
+  priceForAdults: number;
+  priceForChild: number;
   priceCurrency: string;
 }
 export const Flight: FC<IFlight> = (props): ReactElement => {
