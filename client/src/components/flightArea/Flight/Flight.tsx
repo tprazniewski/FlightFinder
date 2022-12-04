@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 import { Header } from "./Header/Header";
 import { Footer } from "./Footer/Footer";
-
+import { ButtonComp } from "../Flight/Button/ButtonComp";
 interface IFlight {
   departureAt: string;
   arriveAt: string;
@@ -37,6 +37,7 @@ export const Flight: FC<IFlight> = (props): ReactElement => {
         priceCurrency={props.priceCurrency}
         availableSits={props.availableSits}
       />
+      <ButtonComp />
     </Box>
   );
 };
