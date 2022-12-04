@@ -10,6 +10,7 @@ interface IFlight {
   priceForAdults: number;
   priceForChild: number;
   priceCurrency: string;
+  availableSits: number;
 }
 export const Flight: FC<IFlight> = (props): ReactElement => {
   return (
@@ -34,6 +35,7 @@ export const Flight: FC<IFlight> = (props): ReactElement => {
         priceForAdults={props.priceForAdults}
         priceForChild={props.priceForChild}
         priceCurrency={props.priceCurrency}
+        availableSits={props.availableSits}
       />
     </Box>
   );

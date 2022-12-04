@@ -4,9 +4,9 @@ interface IFlight {
   priceForAdults: number;
   priceForChild: number;
   priceCurrency: string;
+  availableSits: number;
 }
 export const Footer: FC<IFlight> = (props): ReactElement => {
-  console.log(props.priceForAdults);
   return (
     <>
       <Box
@@ -21,6 +21,9 @@ export const Footer: FC<IFlight> = (props): ReactElement => {
         </Typography>
         <Typography mb={2} component="h2" variant="h6">
           Child Price: {props.priceForChild} {props.priceCurrency}
+        </Typography>
+        <Typography mb={2} component="h2" variant="h6">
+          Available Seats: {props.availableSits}
         </Typography>
       </Box>
     </>

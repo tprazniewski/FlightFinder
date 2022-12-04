@@ -25,7 +25,7 @@ export class GetFlightDto {
   arriveAt: string;
 
   @IsString()
-  isOneWay: boolean;
+  isOneWay: string;
 
   @Type(() => Number)
   @IsInt()

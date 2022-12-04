@@ -21,8 +21,9 @@ export class FlightRepository {
       infants,
     } = getFlightDto;
     const sumOfPlaces = Number(adult) + Number(child) + Number(infants);
-
-    const a = await this.flightModel.aggregate([
+    const returnValue = { oneway: {}, returnWay: {} };
+    const isReturnWay = Boolean(isOneWay);
+    const oneWay = await this.flightModel.aggregate([
       {
         $unwind: '$itineraries',
       },
@@ -46,7 +47,35 @@ export class FlightRepository {
         },
       },
     ]);
-    // console.log(a);
-    return a;
+    returnValue.oneway = oneWay;
+    if (isOneWay.charAt(0) === 'f') {
+      const returnWay = await this.flightModel.aggregate([
+        {
+          $unwind: '$itineraries',
+        },
+        {
+          $match: {
+            depatureDestination: arrivalDestination,
+            arrivalDestination: depatureDestination,
+          },
+        },
+        {
+          $match: {
+            'itineraries.avaliableSeats': {
+              $gte: sumOfPlaces,
+            },
+            'itineraries.depatureAt': {
+              $gte: depatureAt,
+            },
+            'itineraries.arriveAt': {
+              $lte: arriveAt,
+            },
+          },
+        },
+      ]);
+      returnValue.returnWay = returnWay;
+    }
+    console.log(returnValue);
+    return returnValue;
   }
 }

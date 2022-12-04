@@ -57,8 +57,7 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
       }`
     );
     const rest = await res.json();
-    console.log(rest);
-    flightHandler(rest);
+    flightHandler([rest]);
     return rest;
   };
   const isOneWayHandler = () => setIsOneWay(!isOneWay);

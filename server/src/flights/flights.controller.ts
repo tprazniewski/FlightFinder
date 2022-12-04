@@ -9,14 +9,12 @@ export class FlightsController {
   @Get()
   getFlights(@Query() getFlightDto: GetFlightDto) {
     // getFlights(@Query() getFlightDto: GetFlightDto): Promise<Flight[]> {
-    console.log('weszlo w get');
-    console.log('getFlightDto:', getFlightDto);
+
     // return { data: ' this is a message' };
     return this.flightService.getFlightsByFilter(getFlightDto);
   }
   @Post()
   postFlights(@Query() getFlightDto: GetFlightDto): Promise<Flight[]> {
-    console.log('weszlo w post');
     return;
   }
 }
