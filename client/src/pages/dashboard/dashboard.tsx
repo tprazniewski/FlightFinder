@@ -4,28 +4,9 @@ import { SearchFlightForm } from "../../components/createFlightForm/SearchFlight
 import { FlightArea } from "../../components/flightArea/FlightArea";
 import { TypeFlight } from "../../components/interfaces/TypeFlight";
 export const Dashboard: FC = (): ReactElement => {
-  const [flights, setFlights] = useState<TypeFlight>({
-    _id: "",
-    arrivalDestination: "",
-    depatureDestination: "",
-    flight_id: "",
-    itineraries: [
-      {
-        arriveAt: "",
-        avaliableSeats: 0,
-        depatureAt: "",
-        prices: [
-          {
-            adult: 0,
-            child: 0,
-            currency: "",
-          },
-        ],
-      },
-    ],
-  });
+  const [flights, setFlights] = useState<TypeFlight[]>([]);
 
-  const flightHandler = (flight: TypeFlight) => {
+  const flightHandler = (flight: TypeFlight[]) => {
     setFlights(flight);
   };
   return (

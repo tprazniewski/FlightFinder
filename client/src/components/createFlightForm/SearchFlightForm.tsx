@@ -29,7 +29,7 @@ import { ISearchFlight } from "./ISearchFlight";
 import { TypeFlight } from "../interfaces/TypeFlight";
 
 interface IFlight {
-  flightHandler: (flight: TypeFlight) => void;
+  flightHandler: (flight: TypeFlight[]) => void;
 }
 export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
   const { flightHandler } = props;
