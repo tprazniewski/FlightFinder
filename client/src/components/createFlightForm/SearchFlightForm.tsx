@@ -26,7 +26,13 @@ import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { sendApiRequest } from "../../api/api";
 import { ISearchFlight } from "./ISearchFlight";
-export const SearchFlightForm: FC = (): ReactElement => {
+import { TypeFlight } from "../interfaces/TypeFlight";
+
+interface IFlight {
+  flightHandler: (flight: TypeFlight) => void;
+}
+export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
+  const { flightHandler } = props;
   // const [title, setTitle] = useState<string | undefined>(undefined);
   const [isOneWay, setIsOneWay] = useState(true);
   const [departureCity, setDepartureCity] = useState<string>("");
@@ -52,6 +58,7 @@ export const SearchFlightForm: FC = (): ReactElement => {
     );
     const rest = await res.json();
     console.log(rest);
+    flightHandler(rest);
     return rest;
   };
   const isOneWayHandler = () => setIsOneWay(!isOneWay);
@@ -72,7 +79,9 @@ export const SearchFlightForm: FC = (): ReactElement => {
       enabled: false,
     }
   );
-  const searchFlightHandler = () => refetch();
+  const searchFlightHandler = () => {
+    refetch();
+  };
   const addAdult = () => {
     setAdults(adults + 1);
   };
@@ -84,7 +93,7 @@ export const SearchFlightForm: FC = (): ReactElement => {
     }
   };
   const addChildren = () => {
-    setChildren(adults + 1);
+    setChildren(children + 1);
   };
   const deductChildren = () => {
     if (children <= 0) {

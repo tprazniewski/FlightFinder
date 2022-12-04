@@ -37,6 +37,12 @@ export class FlightRepository {
           'itineraries.avaliableSeats': {
             $gte: sumOfPlaces,
           },
+          'itineraries.depatureAt': {
+            $gte: depatureAt,
+          },
+          'itineraries.arriveAt': {
+            $lte: arriveAt,
+          },
         },
       },
     ]);
