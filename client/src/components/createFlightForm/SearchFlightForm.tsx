@@ -56,12 +56,13 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
         f.queryKey[8]
       }`
     );
+
     const rest = await res.json();
     flightHandler([rest]);
     return rest;
   };
   const isOneWayHandler = () => setIsOneWay(!isOneWay);
-  const { data, status, refetch } = useQuery(
+  const { data, status, refetch, isLoading } = useQuery(
     [
       "flights",
       departureCity,
@@ -111,92 +112,95 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
       setInfants(infants - 1);
     }
   };
+
   return (
     <Box
       display="flex"
       flexDirection="column"
       alignItems="flex-start"
       width="100%"
-      px={4}
+      px={8}
       my={6}
     >
-      <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
-        <Typography mb={2} component="h2" variant="h6">
-          One Way
-        </Typography>
+      {" "}
+      <Stack sx={{ width: "100%" }} spacing={4}>
+        <Stack sx={{ width: "100%" }} direction="row" spacing={6}>
+          <Typography mb={2} component="h2" variant="h6">
+            One Way
+          </Typography>
 
-        <Checkbox
-          checked={isOneWay}
-          onChange={isOneWayHandler}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        <Typography mb={2} component="h2" variant="h6">
-          Returned
-        </Typography>
-        <Checkbox
-          checked={!isOneWay}
-          onChange={isOneWayHandler}
-          inputProps={{ "aria-label": "controlled" }}
-        />
+          <Checkbox
+            checked={isOneWay}
+            onChange={isOneWayHandler}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+          <Typography mb={2} component="h2" variant="h6">
+            Returned
+          </Typography>
+          <Checkbox
+            checked={!isOneWay}
+            onChange={isOneWayHandler}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </Stack>
+        {status === "success" && (
+          <Typography mb={2} component="h2" variant="h6">
+            the status is : {status}
+          </Typography>
+        )}
+        <Stack sx={{ width: "100%" }} direction="row" spacing={12}>
+          <DepartureCity onChange={(e) => setDepartureCity(e.target.value)} />
+          <ArriveCity onChange={(e) => setArriveCity(e.target.value)} />
+        </Stack>
+        <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
+          <DepartureDate
+            onChange={(date) => setDepartureDate(date)}
+            value={departureDate}
+          />
+          <ArriveDate
+            onChange={(date) => setArriveDate(date)}
+            value={arriveDate}
+          />
+        </Stack>
+        <Stack direction="row">
+          <Typography> Adults </Typography>
+          <IconButton>
+            <RemoveCircleOutlineIcon onClick={deductAdult} />
+          </IconButton>
+          <Typography>{adults}</Typography>
+          <IconButton>
+            <AddCircleOutlineIcon onClick={addAdult} />
+          </IconButton>
+        </Stack>
+        <Stack direction="row">
+          <Typography> Children 2-11 Years </Typography>
+          <IconButton>
+            <RemoveCircleOutlineIcon onClick={deductChildren} />
+          </IconButton>
+          <Typography>{children}</Typography>
+          <IconButton>
+            <AddCircleOutlineIcon onClick={addChildren} />
+          </IconButton>
+        </Stack>
+        <Stack direction="row">
+          <Typography> Infants (0-23 months) </Typography>
+          <IconButton>
+            <RemoveCircleOutlineIcon onClick={deductInfant} />
+          </IconButton>
+          <Typography>{infants}</Typography>
+          <IconButton>
+            <AddCircleOutlineIcon onClick={addInfant} />
+          </IconButton>
+        </Stack>
+        <Button
+          variant="contained"
+          size="medium"
+          fullWidth
+          onClick={searchFlightHandler}
+        >
+          Search for a flight
+        </Button>
       </Stack>
-      {status === "success" && (
-        <Typography mb={2} component="h2" variant="h6">
-          the status is : {status}
-        </Typography>
-      )}
-
-      <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
-        <DepartureCity onChange={(e) => setDepartureCity(e.target.value)} />
-        <ArriveCity onChange={(e) => setArriveCity(e.target.value)} />
-      </Stack>
-      <Stack sx={{ width: "100%" }} direction="row" spacing={2}>
-        <DepartureDate
-          onChange={(date) => setDepartureDate(date)}
-          value={departureDate}
-        />
-        <ArriveDate
-          onChange={(date) => setArriveDate(date)}
-          value={arriveDate}
-        />
-      </Stack>
-      <Stack direction="row">
-        <Typography> Adults </Typography>
-        <IconButton>
-          <RemoveCircleOutlineIcon onClick={deductAdult} />
-        </IconButton>
-        <Typography>{adults}</Typography>
-        <IconButton>
-          <AddCircleOutlineIcon onClick={addAdult} />
-        </IconButton>
-      </Stack>
-      <Stack direction="row">
-        <Typography> Children 2-11 Years </Typography>
-        <IconButton>
-          <RemoveCircleOutlineIcon onClick={deductChildren} />
-        </IconButton>
-        <Typography>{children}</Typography>
-        <IconButton>
-          <AddCircleOutlineIcon onClick={addChildren} />
-        </IconButton>
-      </Stack>
-      <Stack direction="row">
-        <Typography> Infants (0-23 months) </Typography>
-        <IconButton>
-          <RemoveCircleOutlineIcon onClick={deductInfant} />
-        </IconButton>
-        <Typography>{infants}</Typography>
-        <IconButton>
-          <AddCircleOutlineIcon onClick={addInfant} />
-        </IconButton>
-      </Stack>
-      <Button
-        variant="contained"
-        size="medium"
-        fullWidth
-        onClick={searchFlightHandler}
-      >
-        Search for a flight
-      </Button>
     </Box>
   );
 };
