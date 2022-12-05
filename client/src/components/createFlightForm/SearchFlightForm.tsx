@@ -8,6 +8,8 @@ import {
   IconButton,
   LinearProgress,
   Grid,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -42,9 +44,11 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchFlights = async (f: any) => {
     // f.queryKey[0]
+    setIsLoading(true);
     const res = await fetch(
       `http://localhost:3005/${f.queryKey[0]}?depatureDestination=${
         f.queryKey[1]
@@ -56,13 +60,14 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
         f.queryKey[8]
       }`
     );
+    setIsLoading(false);
 
     const rest = await res.json();
     flightHandler([rest]);
     return rest;
   };
   const isOneWayHandler = () => setIsOneWay(!isOneWay);
-  const { data, status, refetch, isLoading } = useQuery(
+  const { data, status, refetch } = useQuery(
     [
       "flights",
       departureCity,
@@ -143,11 +148,7 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
             inputProps={{ "aria-label": "controlled" }}
           />
         </Stack>
-        {status === "success" && (
-          <Typography mb={2} component="h2" variant="h6">
-            the status is : {status}
-          </Typography>
-        )}
+
         <Stack sx={{ width: "100%" }} direction="row" spacing={12}>
           <DepartureCity onChange={(e) => setDepartureCity(e.target.value)} />
           <ArriveCity onChange={(e) => setArriveCity(e.target.value)} />
@@ -192,6 +193,7 @@ export const SearchFlightForm: FC<IFlight> = (props): ReactElement => {
             <AddCircleOutlineIcon onClick={addInfant} />
           </IconButton>
         </Stack>
+        {isLoading && <LinearProgress />}
         <Button
           variant="contained"
           size="medium"
